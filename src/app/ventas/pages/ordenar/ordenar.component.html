@@ -1,0 +1,90 @@
+<div class="text-layout">
+    <h1>Pipes personalizados</h1>
+    <p>
+        Pipes creados por {{ 'nosotros' | mayusculas:enMayusculas}}.
+    </p>
+
+
+</div>
+
+<p-toolbar class="p-1">
+    <div class="p-toolbar-group-start">
+
+    </div>
+
+    <div class="p-toolbar-group-end">
+        <button pButton
+                (click)="cambiarMayusculas()"
+                label="toogle mayúsculas"
+                class="p-button-warning">
+        </button>
+
+        <button pButton
+                icon="pi pi-sort"
+                label="Por nombre"
+                class="m-1"
+                (click)="cambiarOrden('nombre')">
+        </button>
+
+        <button pButton
+                icon="pi pi-sort"
+                label="Vuela"
+                class="m-1 p-button-success"                
+                (click)="cambiarOrden('vuela')">
+
+        </button>
+
+        <button pButton
+                icon="pi pi-sort"
+                label="Colores"
+                class="m-1 p-button-help"               
+                (click)="cambiarOrden('colores')">
+        </button>
+    </div>
+</p-toolbar>
+
+<div class="grid">
+    <div class="col">
+        <p-table [value]="heroes | ordenar:ordenarPor" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Vuela</th>
+                    <th>Color </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-heroes>
+                <tr>
+                    <!-- ahora crearemos el pipe ordenar nombre por comando, que será : ng g pipe ventas/pipes/ordenar --skip-tests -->
+                    <td>{{heroes.nombre}}</td>
+                    <!-- al encadenar pipes, debemos tener claro que trabajan de izquierda  transformando los datos -->
+                    <td>{{heroes.vuela | vuela | titlecase}}</td>
+                    <td>{{heroes.color}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<div class="grid pt-2">
+    <div class="col">
+        <p-table [value]="heroes | slice:0" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                    <th pSortableColumn="vuela">vuela <p-sortIcon field="vuela"></p-sortIcon></th>
+                    <th pSortableColumn="color">Color <p-sortIcon field="color"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-heroes>
+                <tr>
+                    <!-- ahora crearemos el pipe ordenar nombre por comando, que será : ng g pipe ventas/pipes/ordenar --skip-tests -->
+                    <td>{{heroes.nombre}}</td>
+                    <!-- al encadenar pipes, debemos tener claro que trabajan de izquierda  transformando los datos -->
+                    <td>{{heroes.vuela | vuela | titlecase}}</td>
+                    <td>{{heroes.color}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
